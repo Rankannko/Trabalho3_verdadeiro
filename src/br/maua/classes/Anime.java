@@ -8,7 +8,15 @@ public class Anime {
         Episodios = episodios;
         Nota = nota;
     }
-
+    public String toString() {
+        return "Manga{" +
+                ", URL='" + URL + '\'' +
+                ", Nome='" + Nome + '\'' +
+                ", Sinopse=" + Sinopse + '\'' +
+                ", Episodios" + Episodios + '\'' +
+                ", Nota=" + Nota +
+                '}';
+    }
     public String getURL() {
         return URL;
     }
@@ -27,6 +35,9 @@ public class Anime {
 
     public float getNota() {
         return Nota;
+    }
+
+    public Anime(String nome) {this(null, nome,null,0,0);
     }
 
     private String URL, Nome, Sinopse;
