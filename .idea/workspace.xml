@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3da5610b-e844-4099-aed8-b906ddadd35b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3_verdadeiro/br/maua/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3_verdadeiro/br/maua/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/maua/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/maua/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/maua/classes/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/maua/classes/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/maua/classes/DAO/AnimeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/maua/classes/DAO/AnimeDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +30,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/sqlite-jdbc-3.27.2.1.jar" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
@@ -54,7 +54,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
