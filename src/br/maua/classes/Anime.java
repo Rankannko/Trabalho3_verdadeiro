@@ -12,9 +12,9 @@ public class Anime {
         return "Manga{" +
                 ", URL='" + URL + '\'' +
                 ", Nome='" + Nome + '\'' +
-                ", Sinopse=" + Sinopse + '\'' +
-                ", Episodios" + Episodios + '\'' +
-                ", Nota=" + Nota +
+                ", Sinopse= " + Sinopse + '\'' +
+                ", Episodios=' " + Episodios + '\'' +
+                ", Nota= " + Nota +
                 '}';
     }
     public String getURL() {
