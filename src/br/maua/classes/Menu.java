@@ -4,6 +4,8 @@ import br.maua.classes.DAO.AnimeDAO;
 import br.maua.classes.Anime;
 import br.maua.classes.DAO.MangaDAO;
 import br.maua.classes.Manga;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class Menu {
 
     public Menu(){
         animes= new ArrayList<>();
-        animeDAO= new AnimeDAO();
+        animeDAO = new AnimeDAO();
         mangas= new ArrayList<>();
         mangaDAO = new MangaDAO();
         scanner = new Scanner(System.in);
@@ -44,7 +46,7 @@ public class Menu {
                             alive2=false;
                             break;
                         case 1:
-                            System.out.println("Digite o anime desejado:");
+                            checarAnime();
                             break;
                         case 2:
                             exibirAnimes();
@@ -113,6 +115,13 @@ public class Menu {
         mangas= mangaDAO.getAll();
         System.out.println("Lista de Mangas:");
         mangas.forEach(manga-> System.out.println(manga));
+    }
+
+    public void checarAnime(){
+        System.out.println("O nome do anime é Naruto");
+        String nome = "Naruto";
+        animeDAO.get(nome);
+        animes.forEach(anime->System.out.println(anime));
     }
 }
 

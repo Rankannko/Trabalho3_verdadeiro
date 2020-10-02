@@ -24,8 +24,7 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet result = statement.executeQuery(this.getSelectConditionalString(this.getTableName()) + condition);
-
+            ResultSet result = statement.executeQuery(this.getSelectConditionalString(this.getTableName()) +"\""+ condition+"\"");
             while(result.next()) {
                 Anime anime = new Anime(
                         result.getString("URL"),
@@ -36,12 +35,10 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
                 );
                 animes.add(anime);
             }
-
             result.close();
         } catch (Exception var6) {
             var6.printStackTrace();
         }
-
         return animes;
     }
 
@@ -53,12 +50,10 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
         try {
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(this.getSelectAllString(this.getTableName()));
-
             while(result.next()) {
                 Anime anime = new Anime(result.getString("URL"), result.getString("nome"), result.getString("Sinopse"), result.getInt("Episodios"), result.getFloat("Nota"));
                 animes.add(anime);
             }
-
             result.close();
         } catch (Exception var5) {
             var5.printStackTrace();
@@ -134,6 +129,6 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
 
     @Override
     public String getSelectConditionalString(String table) {
-        return "SELECT * FROM " + table + " WHERE ";
+        return "SELECT * FROM " + table + " WHERE Nome like";
     }
 }

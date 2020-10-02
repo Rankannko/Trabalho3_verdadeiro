@@ -13,7 +13,7 @@ public class Manga {
     @Override
     public String toString() {
         return "Manga{" +
-                ", URL='" + URL + '\'' +
+                "URL='" + URL + '\'' +
                 ", Nome='" + Nome + '\'' +
                 ", Tipo=" + Tipo + '\'' +
                 ", Sinopse=" + Sinopse + '\'' +

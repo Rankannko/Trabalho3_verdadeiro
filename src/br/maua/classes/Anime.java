@@ -9,8 +9,8 @@ public class Anime {
         Nota = nota;
     }
     public String toString() {
-        return "Manga{" +
-                ", URL='" + URL + '\'' +
+        return "Anime{" +
+                "URL='" + URL + '\'' +
                 ", Nome='" + Nome + '\'' +
                 ", Sinopse= " + Sinopse + '\'' +
                 ", Episodios=' " + Episodios + '\'' +
