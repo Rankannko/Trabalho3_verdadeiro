@@ -68,6 +68,7 @@ public class Menu {
                             break;
                         case 1:
                             System.out.println("Digite o manga desejado:");
+                            checarManga();
                             break;
                         case 2:
                             exibirMangas();
@@ -119,9 +120,16 @@ public class Menu {
 
     public void checarAnime(){
         System.out.println("O nome do anime é Naruto");
-        String nome = "Naruto";
-        animeDAO.get(nome);
+        String nome = scanner.nextLine();
+        animes=animeDAO.get(nome);
         animes.forEach(anime->System.out.println(anime));
+    }
+
+    public void checarManga(){
+        System.out.println("O nome do Manga é MHA");
+        String nome = scanner.nextLine();
+        mangas=mangaDAO.get(nome);
+        mangas.forEach(manga->System.out.println(manga));
     }
 }
 

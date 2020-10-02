@@ -25,7 +25,7 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
 
         try {
             Statement statement = this.connection.createStatement();
-            ResultSet result = statement.executeQuery(this.getSelectConditionalString(this.getTableName()) + condition);
+            ResultSet result = statement.executeQuery(this.getSelectConditionalString(this.getTableName()) +"\""+ condition+"\"");
 
             while(result.next()) {
                 Manga manga = new Manga(
@@ -35,7 +35,7 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
                         result.getString("Sinopse"),
                         result.getInt("Capitulos"),
                         result.getInt("Volumes"),
-                        result.getFloat("Nota")
+                        result.getFloat("Notas")
                 );
                 mangas.add(manga);
             }
@@ -146,6 +146,6 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
 
     @Override
     public String getSelectConditionalString(String table) {
-        return "SELECT * FROM " + table + " WHERE ";
+        return "SELECT * FROM " + table + " WHERE Nome like";
     }
 }
