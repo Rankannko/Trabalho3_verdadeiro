@@ -51,6 +51,9 @@ public class Menu {
                         case 2:
                             exibirAnimes();
                             break;
+                        case 3:
+                            cadastrarNovoAnime();
+                            break;
                         default:
                             System.out.println("Não é um numero valido, escolha uma opção que está no menu");
                     }
@@ -72,6 +75,9 @@ public class Menu {
                             break;
                         case 2:
                             exibirMangas();
+                            break;
+                        case 3:
+                            cadastrarNovoManga();
                             break;
                         default:
                             System.out.println("Não é um numero valido, escolha uma opção que está no menu");
@@ -119,7 +125,7 @@ public class Menu {
     }
 
     public void checarAnime(){
-        System.out.println("O nome do anime é Naruto");
+        System.out.println("Digite o nome do anime");
         String nome = scanner.nextLine();
         animes=animeDAO.get(nome);
         animes.forEach(anime->System.out.println(anime));
@@ -130,6 +136,38 @@ public class Menu {
         String nome = scanner.nextLine();
         mangas=mangaDAO.get(nome);
         mangas.forEach(manga->System.out.println(manga));
+    }
+
+    private void cadastrarNovoAnime() {
+        String URL, nome,sinopse;
+        int episodios;
+        float nota;
+        System.out.println("Informe os dados:");
+        URL = scanner.nextLine();
+        nome = scanner.nextLine();
+        sinopse = scanner.nextLine();
+        episodios = Integer.parseInt(scanner.nextLine());
+        nota = Float.parseFloat(scanner.nextLine());
+        animeDAO.create(new Anime(
+                URL, nome, sinopse, episodios,nota
+        ));
+    }
+
+    private void cadastrarNovoManga() {
+        String URL,nome,tipo,sinopse;
+        int capitulos, volumes;
+        float notas;
+        System.out.println("Informe os dados:");
+        URL = scanner.nextLine();
+        nome = scanner.nextLine();
+        tipo= scanner.nextLine();
+        sinopse = scanner.nextLine();
+        capitulos = Integer.parseInt(scanner.nextLine());
+        volumes = Integer.parseInt(scanner.nextLine());
+        notas = Float.parseFloat(scanner.nextLine());
+        mangaDAO.create(new Manga(
+                URL, nome,tipo, sinopse,capitulos,volumes,notas
+        ));
     }
 }
 

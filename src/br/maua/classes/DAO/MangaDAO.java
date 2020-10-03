@@ -131,12 +131,12 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
 
     @Override
     public String getUpdateString(String table) {
-        return "UPDATE "+ table +" URL = ?, Nome = ?, Tipos = ? , Sinopse = ?, Capitulos = ?, Volumes = ? , Notas = ? WHERE Nome = ?;";
+        return "UPDATE "+ table +" URL = ?, Nome = ?, Tipo = ? , Sinopse = ?, Capitulos = ?, Volumes = ? , Notas = ? WHERE Nome = ?;";
     }
 
     @Override
     public String getInsertString(String table) {
-        return "INSERT INTO "+ table + " (Url, nome, Tipos, Sinopse, Capitulos, Volumes, Notas) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        return "INSERT INTO "+ table + " (Url, nome, Tipo, Sinopse, Capitulos, Volumes, Notas) VALUES (?, ?, ?, ?, ?, ?, ?);";
     }
 
     @Override

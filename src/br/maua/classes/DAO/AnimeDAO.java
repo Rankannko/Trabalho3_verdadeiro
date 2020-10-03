@@ -97,6 +97,7 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
             preparedStatement.setString(3,anime.getSinopse());
             preparedStatement.setInt(4,anime.getEpisodios());
             preparedStatement.setFloat(5,anime.getNota());
+            int retorno = preparedStatement.executeUpdate();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -119,7 +120,7 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
 
     @Override
     public String getInsertString(String table) {
-        return "INSERT INTO "+ table + " (Url, nome, Sinopse, Episodios, Nota) VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO "+ table + "(Url, nome, Sinopse, Episodios, Nota) VALUES (?, ?, ?, ?, ?);";
     }
 
     @Override
