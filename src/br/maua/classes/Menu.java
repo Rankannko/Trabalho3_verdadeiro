@@ -5,6 +5,7 @@ import br.maua.classes.Anime;
 import br.maua.classes.DAO.MangaDAO;
 import br.maua.classes.Manga;
 import br.maua.classes.parser.AnimeParser;
+import br.maua.classes.parser.MangaParser;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,6 +25,7 @@ public class Menu {
     private AnimeDAO animeDAO;
     private List <Manga> mangas;
     private MangaDAO mangaDAO;
+    private int opcao;
 
     public Menu(){
         animes= new ArrayList<>();
@@ -37,8 +39,16 @@ public class Menu {
         boolean alive = true;
         do{
             menuvisual1();
-            int num = Integer.parseInt(this.scanner.nextLine());
-            switch(num){
+            while(true) {
+                try {
+                    opcao = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Por favor inserir um numero valido: ");
+
+                }
+            }
+            switch(opcao){
             case 0:
                 alive = false;
                 break;
@@ -80,7 +90,8 @@ public class Menu {
                             break;
                         case 1:
                             System.out.println("Digite o manga desejado:");
-                            checarManga();
+                            String nome = scanner.nextLine();
+                            checarManga(nome);
                             break;
                         case 2:
                             exibirMangas();
@@ -151,12 +162,16 @@ public class Menu {
         }
     }
 
-    public void checarManga(){
+    public void checarManga(String nome) throws IOException, InterruptedException {
         Manga manga;
-        System.out.println("Digite o nome do Manga:");
-        String nome = scanner.nextLine();
         manga=mangaDAO.get(nome);
-        System.out.println(manga);
+        if (manga == null){
+            Manga json_retorno = requestMangaAPI(nome);
+            System.out.println(json_retorno);
+        }
+        else{
+            System.out.println(manga);
+        }
     }
 
     private void cadastrarNovoAnime() {
@@ -209,6 +224,25 @@ public class Menu {
         animeDAO.create(anime);
         return anime;
     }
+
+    private Manga requestMangaAPI(String name) throws IOException, InterruptedException {
+        System.out.println("Fazendo request");
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET().uri(URI.create(("https://api.jikan.moe/v3/search/manga?q=")+name.replace(" ","%20"))).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        MangaParser mangaParser = new MangaParser();
+        Manga manga = mangaParser.parseJson(response.body());
+        mangaDAO.create(manga);
+        return manga;
+    }
+
 }
 
 
