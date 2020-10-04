@@ -4,8 +4,14 @@ import br.maua.classes.DAO.AnimeDAO;
 import br.maua.classes.Anime;
 import br.maua.classes.DAO.MangaDAO;
 import br.maua.classes.Manga;
+import br.maua.classes.parser.AnimeParser;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.SQLOutput;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +32,7 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
-    public void run(){
+    public void run() throws Exception {
         boolean alive = true;
         do{
             menuvisual1();
@@ -84,6 +90,11 @@ public class Menu {
                     }
                 } while (alive3);
                 break;
+                case 3:
+                    System.out.println("Diga o código da coleção:");
+                    String nome = scanner.nextLine();
+                    String json_retorno = leituraParaJSON(String.format("https://api.jikan.moe/v3/search/anime?q=", nome));
+                    System.out.println("Anime:" + AnimeParser.parseJson(json_retorno));
             default:
                 System.out.println("Não é um numero valido, escolha uma opção que está no menu");
             }
@@ -168,6 +179,26 @@ public class Menu {
         mangaDAO.create(new Manga(
                 URL, nome,tipo, sinopse,capitulos,volumes,notas
         ));
+    }
+
+    public static String leituraParaJSON(String request_url) throws Exception{
+        HttpClient client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET().uri(URI.create(request_url)).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("Status Code:" + response.statusCode());
+        System.out.println("Body:" + response.body());
+        return response.body();
+    }
+
+    private void criarAnimeParser(){
+
     }
 }
 

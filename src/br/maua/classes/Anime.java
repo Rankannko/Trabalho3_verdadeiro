@@ -39,6 +39,7 @@ public class Anime {
 
     public Anime(String nome) {this(null, nome,null,0,0);
     }
+    public Anime (){};
 
     private String URL, Nome, Sinopse;
     private int Episodios;
