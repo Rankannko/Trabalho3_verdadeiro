@@ -1,5 +1,6 @@
 package br.maua.classes.DAO;
 
+import br.maua.classes.Anime;
 import br.maua.classes.Manga;
 
 import java.sql.*;
@@ -20,13 +21,10 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
     }
 
     @Override
-    public List<Manga> get(String condition) {
-        ArrayList mangas = new ArrayList();
-
+    public Manga get(String condition) {
         try {
-            Statement statement = this.connection.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(this.getSelectConditionalString(this.getTableName()) +"\""+ condition+"\"");
-
             while(result.next()) {
                 Manga manga = new Manga(
                         result.getString("URL"),
@@ -37,15 +35,13 @@ public class MangaDAO implements DAO<Manga>, DAOFields{
                         result.getInt("Volumes"),
                         result.getFloat("Notas")
                 );
-                mangas.add(manga);
+                result.close();
+                return manga;
             }
-
-            result.close();
         } catch (Exception var6) {
             var6.printStackTrace();
         }
-
-        return mangas;
+        return null;
     }
 
     @Override

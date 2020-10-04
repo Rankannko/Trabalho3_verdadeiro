@@ -6,6 +6,7 @@ import br.maua.classes.DAO.MangaDAO;
 import br.maua.classes.Manga;
 import br.maua.classes.parser.AnimeParser;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -52,7 +53,9 @@ public class Menu {
                             alive2=false;
                             break;
                         case 1:
-                            checarAnime();
+                            System.out.println("Diga o nome do anime:");
+                            String nome = scanner.nextLine();
+                            checarAnime(nome);
                             break;
                         case 2:
                             exibirAnimes();
@@ -91,16 +94,17 @@ public class Menu {
                 } while (alive3);
                 break;
                 case 3:
-                    System.out.println("Diga o código da coleção:");
+                    System.out.println("Diga o nome do anime:");
                     String nome = scanner.nextLine();
-                    String json_retorno = leituraParaJSON(String.format("https://api.jikan.moe/v3/search/anime?q=", nome));
-                    System.out.println("Anime:" + AnimeParser.parseJson(json_retorno));
+                    System.out.println(nome);
+                    Anime json_retorno = requestAnimeAPI(nome);
+                    System.out.println(json_retorno);
+                    break;
             default:
                 System.out.println("Não é um numero valido, escolha uma opção que está no menu");
             }
         }while (alive);
     }
-
 
     private static void menuvisual1(){
         System.out.println("Escolha o que você quer checar:");
@@ -135,18 +139,24 @@ public class Menu {
         mangas.forEach(manga-> System.out.println(manga));
     }
 
-    public void checarAnime(){
-        System.out.println("Digite o nome do anime");
-        String nome = scanner.nextLine();
-        animes=animeDAO.get(nome);
-        animes.forEach(anime->System.out.println(anime));
+    public void checarAnime(String nome) throws IOException, InterruptedException {
+        Anime anime;
+        anime=animeDAO.get(nome);
+        if (anime == null){
+            Anime json_retorno = requestAnimeAPI(nome);
+            System.out.println(json_retorno);
+            }
+        else{
+            System.out.println(anime);
+        }
     }
 
     public void checarManga(){
-        System.out.println("O nome do Manga é MHA");
+        Manga manga;
+        System.out.println("Digite o nome do Manga:");
         String nome = scanner.nextLine();
-        mangas=mangaDAO.get(nome);
-        mangas.forEach(manga->System.out.println(manga));
+        manga=mangaDAO.get(nome);
+        System.out.println(manga);
     }
 
     private void cadastrarNovoAnime() {
@@ -181,24 +191,23 @@ public class Menu {
         ));
     }
 
-    public static String leituraParaJSON(String request_url) throws Exception{
+
+    private Anime requestAnimeAPI(String name) throws IOException, InterruptedException {
+        System.out.println("Fazendo request");
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .GET().uri(URI.create(request_url)).build();
+                .GET().uri(URI.create(("https://api.jikan.moe/v3/search/anime?q=")+name.replace(" ","%20"))).build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("Status Code:" + response.statusCode());
-        System.out.println("Body:" + response.body());
-        return response.body();
-    }
-
-    private void criarAnimeParser(){
-
+        AnimeParser animeParser = new AnimeParser();
+        Anime anime = animeParser.parseJson(response.body());
+        animeDAO.create(anime);
+        return anime;
     }
 }
 
