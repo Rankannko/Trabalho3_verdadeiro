@@ -18,6 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**Inicio da classe menu, onde o programa é rodado. Nesta classe, trabalhamos com um menu para escolhas do
+ * usuario, e a partir deste ponto, o usuário escolhe se quer fazer uma busca no banco de dados ou se planeja
+ * acessar o banco de dados inteiro
+ * @Author João Pedro de Pauda Santoro Azevedo RA: 18.02277-4 e-mail: azevedomasterjp27@hotmail.com
+ * @since 04/10
+ * @version 1.0
+ */
 public class Menu {
 
     private Scanner scanner;
@@ -27,6 +34,9 @@ public class Menu {
     private MangaDAO mangaDAO;
     private int opcao;
 
+    /**
+     * Inicio da classe menu, inicializando as variaveis basicas que serão utilizadas no programa
+     */
     public Menu(){
         animes= new ArrayList<>();
         animeDAO = new AnimeDAO();
@@ -35,6 +45,10 @@ public class Menu {
         scanner = new Scanner(System.in);
     }
 
+    /** Função que inicializa o menu, permitindo uma interação com o usuário. As escolhas que o usuário tem
+     * são selecionadas aqui.
+     * @throws Exception
+     */
     public void run() throws Exception {
         boolean alive = true;
         do{
@@ -117,6 +131,9 @@ public class Menu {
         }while (alive);
     }
 
+    /**
+     * Primeiro dos menus utilizados, para vizualizar as opções disponiveis para o usuario.
+     */
     private static void menuvisual1(){
         System.out.println("Escolha o que você quer checar:");
         System.out.println("1-Anime");
@@ -124,13 +141,18 @@ public class Menu {
         System.out.println("0-Sair");
     }
 
+    /**
+     * Segundo dos menus utilizados, para vizualizar as opções disponiveis para o usuario.
+     */
     private static void menuvisual2(){
         System.out.println("Escolha o que deseja:");
         System.out.println("1-Procurar por série específica");
         System.out.println("2-Exibir os dados registrados no banco de dados");
         System.out.println("0-Voltar para o menu anterior");
     }
-
+    /**
+     * Terceiro dos menus utilizados, para vizualizar as opções disponiveis para o usuario.
+     */
     private static void menuvisual3(){
         System.out.println("Escolha o que deseja:");
         System.out.println("1-Procurar por série específica");
@@ -138,18 +160,30 @@ public class Menu {
         System.out.println("0-Voltar para o menu anterior");
     }
 
+    /**
+     * Função para mostrar todos os animes que tem na lista.
+     */
     public void exibirAnimes(){
         animes = animeDAO.getAll();
         System.out.println("Lista de Animes:");
         animes.forEach(anime -> System.out.println(anime));
     }
 
+    /**
+     * Função pra mostrar todos os mangas que tem no banco de dados.
+     */
     public void exibirMangas(){
         mangas= mangaDAO.getAll();
         System.out.println("Lista de Mangas:");
         mangas.forEach(manga-> System.out.println(manga));
     }
 
+    /**Função para mostrar se tem um anime que esta no banco de dados, e, caso não, fazer o pull do API dos
+     * Dados do anime
+     * @param nome
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void checarAnime(String nome) throws IOException, InterruptedException {
         Anime anime;
         anime=animeDAO.get(nome);
@@ -161,7 +195,12 @@ public class Menu {
             System.out.println(anime);
         }
     }
-
+    /**Função para mostrar se tem um anime que esta no banco de dados, e, caso não, fazer o pull do API dos
+     * Dados do manga
+     * @param nome
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void checarManga(String nome) throws IOException, InterruptedException {
         Manga manga;
         manga=mangaDAO.get(nome);
@@ -174,6 +213,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Função pra criar novo anime
+     */
     private void cadastrarNovoAnime() {
         String URL, nome,sinopse;
         int episodios;
@@ -189,6 +231,9 @@ public class Menu {
         ));
     }
 
+    /**
+     * Criação de novo manga
+     */
     private void cadastrarNovoManga() {
         String URL,nome,tipo,sinopse;
         int capitulos, volumes;
@@ -207,6 +252,13 @@ public class Menu {
     }
 
 
+    /**Função para requesitar animes da API, utilizando os recurços de Anime Parser para se transformar em um
+     * item Anime
+     * @param name
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private Anime requestAnimeAPI(String name) throws IOException, InterruptedException {
         System.out.println("Fazendo request");
         HttpClient client = HttpClient.newBuilder()
@@ -225,6 +277,13 @@ public class Menu {
         return anime;
     }
 
+    /**Função para requesitar animes da API, utilizando os recurços de Anime Parser para se transformar em um
+     * item Manga
+     * @param name
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private Manga requestMangaAPI(String name) throws IOException, InterruptedException {
         System.out.println("Fazendo request");
         HttpClient client = HttpClient.newBuilder()

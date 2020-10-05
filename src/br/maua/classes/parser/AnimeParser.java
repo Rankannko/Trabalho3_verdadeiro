@@ -5,7 +5,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import br.maua.classes.DAO.AnimeDAO;
 import org.json.JSONException;
-
+/**Função para tratar os dados recebidos da API para ser utilizada no banco de dados
+ * @Author João Pedro de Pauda Santoro Azevedo RA: 18.02277-4 e-mail: azevedomasterjp27@hotmail.com
+ * @since 04/10
+ * @version 1.0
+ */
 public class AnimeParser {
     private AnimeDAO animeDAO;
 

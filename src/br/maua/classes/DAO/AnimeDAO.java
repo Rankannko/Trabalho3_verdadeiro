@@ -6,10 +6,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Funçao DAO, para utilizar a classe Anime como um banco de dados SQL
+ * @Author João Pedro de Pauda Santoro Azevedo RA: 18.02277-4 e-mail: azevedomasterjp27@hotmail.com
+ * @since 04/10
+ * @version 1.0
+ */
 public class AnimeDAO implements DAO<Anime>, DAOFields {
     private Connection connection;
     private String myDBConnectionString = "jdbc:sqlite:DatabaseParaUsar.db";
 
+    /**
+     * Função geradora, com uma connecção para o banco de dados.
+     */
     public AnimeDAO() {
         try {
             this.connection = DriverManager.getConnection(this.myDBConnectionString);
@@ -18,6 +26,11 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
         }
 
     }
+
+    /**Função basica para retornar um unico item do banco de dados.
+     * @param condition
+     * @return
+     */
     @Override
     public Anime get(String condition) {
         try {
@@ -41,6 +54,9 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
     }
 
 
+    /**Função para retornar todos os items do banco de dados.
+     * @return
+     */
     @Override
     public List<Anime> getAll() {
         ArrayList animes = new ArrayList();
@@ -60,32 +76,10 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
         return animes;
     }
 
-    @Override
-    public void update(Anime anime) {
-    try{
-        PreparedStatement preparedStatement = this.connection.prepareStatement(this.getUpdateString(this.getTableName()));
-        preparedStatement.setString(1, anime.getURL());
-        preparedStatement.setString(2, anime.getNome());
-        preparedStatement.setString(3, anime.getSinopse());
-        preparedStatement.setInt(4, anime.getEpisodios());
-        preparedStatement.setFloat(5, anime.getNota());
-        int var3 = preparedStatement.executeUpdate();
-    } catch (Exception var4) {
-        var4.printStackTrace();
-        }
-    }
 
-    @Override
-    public void delete(Anime anime) {
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(getDeleteString(getTableName()));
-            preparedStatement.setString(1, anime.getNome());
-            preparedStatement.executeUpdate();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * @param anime Funcão para criar um anime.
+     */
     @Override
     public void create(Anime anime) {
         try{
@@ -101,31 +95,37 @@ public class AnimeDAO implements DAO<Anime>, DAOFields {
         }
     }
 
+    /**
+     * @return Função com o nome da tabela
+     */
     @Override
     public String getTableName() {
         return "Animes";
     }
 
-    @Override
-    public String getDeleteString(String table) {
-        return "DELETE FROM "+ table +" WHERE Id = ?";
-    }
 
-    @Override
-    public String getUpdateString(String table) {
-        return "UPDATE "+ table +" URL = ?, Nome = ?, Sinopse = ?, Episodios = ?, Nota = ? WHERE Nome = ?;";
-    }
-
+    /**
+     * @param table DAO para incerir o nome.
+     * @return
+     */
     @Override
     public String getInsertString(String table) {
         return "INSERT INTO "+ table + "(Url, nome, Sinopse, Episodios, Nota) VALUES (?, ?, ?, ?, ?);";
     }
 
+    /**
+     * @param table Função pra selecionar todos os items do banco de dados
+     * @return
+     */
     @Override
     public String getSelectAllString(String table) {
         return "SELECT * FROM " + table;
     }
 
+    /**
+     * @param table Função para selecionar um item em especifico do banco de dados.
+     * @return
+     */
     @Override
     public String getSelectConditionalString(String table) {
         return "SELECT * FROM " + table + " WHERE Nome LIKE";

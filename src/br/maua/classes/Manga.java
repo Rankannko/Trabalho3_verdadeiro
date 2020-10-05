@@ -1,5 +1,9 @@
 package br.maua.classes;
-
+/**Manga, utilizada como base do banco de dados.
+ * @Author João Pedro de Pauda Santoro Azevedo RA: 18.02277-4 e-mail: azevedomasterjp27@hotmail.com
+ * @since 04/10
+ * @version 1.0
+ */
 public class Manga {
     public Manga(String URL, String nome, String tipo, String sinopse, int capitulos, int volumes, float nota) {
         this.URL = URL;
@@ -10,6 +14,9 @@ public class Manga {
         Volumes = volumes;
         Nota = nota;
     }
+    /**Maneira de exibir a classe anime de uma maneira visual.
+     * @return
+     */
     @Override
     public String toString() {
         return "Manga{" +
